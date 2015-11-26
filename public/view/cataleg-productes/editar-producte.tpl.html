@@ -1,0 +1,30 @@
+<form name="editarProducte" role="form" method="POST" novalidate>
+	<div class="form-group" ng-class="{'has-error':editarProducte.supermercat.$error.required && editarProducte.supermercat.$dirty}">
+    	<label class="control-label" for="nom">{{'cataleg.producte.supermercat' | translate}}</label>					
+		<select class="form-control" name="super" ng-model="Producte.producte.supermercat"
+        	ng-options="super as super.nom for super in Producte.supermercats track by super.id">
+        	<option value="">{{'cataleg.producte.defecte.super' | translate}}</option>
+    	</select>
+	</div>	
+	<div class="form-group" ng-class="{'has-error':editarProducte.nom.$error.required && editarProducte.nom.$dirty}">
+		<label class="control-label" for="nom">{{'cataleg.producte.nom' | translate}}</label>
+		<input type="text" class="form-control" id="nom" name="nom" ng-model="Producte.producte.nom" placeholder="{{'cataleg.producte.defecte.nom' | translate}}" required autofocus>	    
+	</div>
+	<div class="form-group" ng-class="{'has-error':editarProducte.nombre.$error.required && editarProducte.nombre.$dirty}">  
+		<label class="control-label" for="nombre">{{'cataleg.producte.nombre' | translate}}</label>
+		<input type="text" class="form-control" id="nombre" name="nombre" ng-model="Producte.producte.nombre" placeholder="{{'cataleg.producte.defecte.nombre' | translate}}" required>    
+	</div>
+	
+	<div>
+		<div ng-include="'view/cancelar.tlp.html'" class="botons-form"></div>
+		<div class="botons-form">
+			<button type="submit" class="btn btn-default btn-primary" ng-disabled="!editarProducte.$valid" ng-click="Producte.guardarProducte()">{{'general.gravar' | translate}}</button>
+		</div>
+		<div class="botons-form">
+			<button type="submit" class="btn btn-primary" ng-disabled="!editarProducte.$valid" ng-click="Producte.guardarProducteYContinuar(editarProducte)">{{'general.gravar.continuar' | translate}}</button>	  	  
+		</div>
+	</div>
+	<input type="text" id="id" name="id" ng-model="Producte.producte.id" ng-hide="true">
+</form>
+
+        

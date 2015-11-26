@@ -1,0 +1,32 @@
+<div class="row">
+	<label class="col-lg-2 col-md-2 col-sm-2 col-xs-5 control-label">{{'cataleg.producte.supermercat' | translate}}:</label>
+	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-7">{{Supermercat.supermercat.nom}}</div>
+</div>
+
+<div class="table-responsive">		
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th translate>cataleg.columna.nom</th>
+				<th translate>cataleg.columna.darreracompra</th>
+				<th translate>cataleg.columna.seguentcompra</th>
+			</tr>
+		</thead>
+		<tbody ng-if="Supermercat.translate.use() === 'ca'">
+			<tr ng-repeat="producte in Supermercat.supermercat.productes | orderBy: 'nom'">
+				<td>{{producte.nom}}</td>
+				<td>{{producte.darreraCompra}}</td>
+				<td>{{producte.seguentCompra}}</td>
+			</tr>
+		</tbody>
+		<tbody	ng-if="Supermercat.translate.use() === 'es'">	
+			<tr ng-repeat="producte in Supermercat.supermercat.productes | orderBy: 'nombre'">				
+				<td>{{producte.nombre}}</td>
+				<td>{{producte.darreraCompra}}</td>
+				<td>{{producte.seguentCompra}}</td>
+			</tr>
+		</tbody>
+	</table>			
+</div>	
+
+<div ng-include="'view/tornar-enrere.tlp.html'"></div>

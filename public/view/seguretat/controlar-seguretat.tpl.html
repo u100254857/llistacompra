@@ -1,0 +1,13 @@
+<form name="controlarSeguretat" role="form" method="POST" novalidate>
+	<div class="form-group" ng-class="{'has-error':controlarSeguretat.telefon.$error.required && controlarSeguretat.telefon.$dirty }">
+    	<label class="control-label" for="nom" translate>seguretat.telefon</label>
+    	<input type="text" class="form-control" id="telefon" name="telefon" ng-model="Seguretat.telefon" placeholder="{{'seguretat.defecte.telefon' | translate}}" required autofocus>	    
+	</div>
+	<div class="alert alert-danger" role="alert" ng-show="controlarSeguretat.telefon.$error.required && controlarSeguretat.telefon.$dirty && Seguretat.usuariNoValid" translate>seguretat.usuari.novalid</div>
+	<div>		
+		<div class="botons-form">
+			<button type="submit" class="btn btn-default btn-primary" ng-disabled="!controlarSeguretat.$valid" ng-click="Seguretat.validarUsuari(controlarSeguretat)" translate>seguretat.iniciar.sessio</button>
+		</div>
+	</div>	
+</form>
+        

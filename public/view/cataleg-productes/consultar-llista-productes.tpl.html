@@ -1,0 +1,85 @@
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group">
+    <button type="button" class="btn btn-default" ng-click="CatalegProductes.editarProducte(true)">
+      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-default" ng-click="CatalegProductes.consultarProducte()">
+      <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+    </button>	 	    
+    <button type="button" class="btn btn-default" ng-click="CatalegProductes.editarProducte(false)">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    </button>	 
+    <button type="button" class="btn btn-default" data-toggle="modal" ng-click="CatalegProductes.esborrarProducte(true)">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>	        
+   </div>
+</div>
+
+<form class="form-inline cataleg-form">
+	<div class="form-group">			    
+		<label for="ordre" class="control-label" translate>cataleg.ordre</label>			    
+	    <select class="form-control" name="ordre" ng-model="CatalegProductes.ordre">
+		  	<option value="supermercat.nom" translate>cataleg.columna.supermercat</option>
+		  	<option value="nom" translate>cataleg.columna.nom</option>
+		  	<option value="darreraCompra" translate>cataleg.columna.darreracompra</option>
+		  	<option value="seguentCompra" translate>cataleg.columna.seguentcompra</option>
+		</select>    
+    </div>
+    <div class="form-group cataleg-grup-form">
+		<label for="enCistella" class="control-label" translate>cataleg.encistella</label>
+	    <select class="form-control" name="enCistella" ng-model="enCistella">
+			<option value="" selected>--</option>
+		  	<option value=true>Si</option>
+		  	<option value=false>No</option>
+		</select>    
+	</div>
+</form>	
+
+<div class="table-responsive">		
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th translate>cataleg.columna.supermercat</th>			
+				<th translate>cataleg.columna.nom</th>
+				<th translate class="vertical">cataleg.columna.darreracompra</th>
+				<th translate class="vertical">cataleg.columna.seguentcompra</th>
+				<th/>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-click="CatalegProductes.seleccionar(producte)" ng-class="{success:(CatalegProductes.retornaSeleccionat()==producte)}" ng-repeat="producte in CatalegProductes.productes | orderBy: CatalegProductes.ordre | filter: enCistella">
+				<td>{{producte.supermercat.nom}}</td>
+				<td ng-if="CatalegProductes.translate.use() === 'ca'">{{producte.nom}}</td>
+				<td ng-if="CatalegProductes.translate.use() === 'es'">{{producte.nombre}}</td>
+				<td class="vertical">{{producte.darreraCompra}}</td>
+				<td class="vertical">{{producte.seguentCompra}}</td>
+				<td>
+				  <div class="pull-right"><button class="btn btn-primary btn-xs" ng-click="CatalegProductes.afegirCistella(producte)" ng-hide="CatalegProductes.enCistella(producte.id)">{{'cataleg.afegir' | translate}}<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button></div>
+				  <div class="pull-right"><button class="btn btn-warning btn-xs" ng-click="CatalegProductes.traureCistella(producte)" ng-hide="!CatalegProductes.enCistella(producte.id)"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>{{'cataleg.traure' | translate}}</button></div>					
+				</td>
+			</tr>
+		</tbody>
+	</table>			
+</div>	
+		
+<div ng-include="'view/tornar-enrere.tlp.html'"></div>		
+
+<!-- Eliminar producte -->
+<div class="modal fade" id="missatgeEliminar" tabindex="-1" role="dialog" aria-labelledby="missatgeEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="missatgeEliminarLabel" >{{'cataleg.producte.eliminar.titol' | translate}}</h4>
+      </div>
+      <div class="modal-body">
+      	<span ng-if="CatalegProductes.translate.use() === 'ca'">{{'cataleg.producte.eliminar.missatge' | translate}}{{CatalegProductes.retornaSeleccionat().nom}}</span>      
+      	<span ng-if="CatalegProductes.translate.use() === 'es'">{{'cataleg.producte.eliminar.missatge' | translate}}{{CatalegProductes.retornaSeleccionat().nombre}}</span>
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">{{'general.cancelar' | translate}}</button>
+      	<button type="button" class="btn btn-primary" ng-click="CatalegProductes.esborrarProducte(false)">{{'general.acceptar' | translate}}</button>	        
+      </div>
+    </div>
+  </div>
+</div>	

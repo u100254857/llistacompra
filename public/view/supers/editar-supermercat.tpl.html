@@ -1,0 +1,10 @@
+<form name="editarSupermercat" role="form" method="POST" novalidate>
+  	<div class="form-group" ng-class="{'has-error':editarSupermercat.nom.$error.required && editarSupermercat.nom.$dirty}">
+	    <label class="control-label" for="nom">{{'supermercats.supermercat.nom' | translate}}</label>
+	    <input type="text" class="form-control" id="nom" name="nom" ng-model="Supermercat.supermercat.nom" placeholder="{{'supermercats.supermercat.defecte.nom' | translate}}" required autofocus="autofocus">	    
+  	</div>
+  	<div ng-include="'view/cancelar.tlp.html'" class="botons-form"></div>
+  	<button type="submit" class="btn btn-default btn-primary" ng-disabled="!editarSupermercat.$valid" ng-click="Supermercat.guardarSupermercat()">{{'general.gravar' | translate}}</button>	  
+ 	<input type="text" id="id" name="id" ng-model="supermercat.id" ng-hide="true">
+ </form>
+        
