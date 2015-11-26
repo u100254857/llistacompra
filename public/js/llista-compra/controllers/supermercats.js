@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	//supermercats
+	//supermercats i
 	var app=angular.module("LlistaCompraApp");
 
 	var SupersController=function ($location,SupermercatsService,supers){
