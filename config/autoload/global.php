@@ -14,11 +14,12 @@
 return array(
      'db' => array(
          'driver'         => 'Pdo',
-         'dsn'            => 'mysql:dbname=llista_compra;host=localhost',
+         'dsn'            => 'mysql:dbname=u100254857_llco;host=localhost',
          'driver_options' => array(
              PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
          ),
-     	 'user' => 'root',
+     	 'user' => 'u100254857_admin',
+     	 'password' => 'conejito'
      ),
      'service_manager' => array(
          'factories' => array(
