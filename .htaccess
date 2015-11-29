@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteBase /public/
+RewriteRule ^(.*)$ %{ENV:BASE}/public/$1 [NC,L]
