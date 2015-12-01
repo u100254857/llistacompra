@@ -28,7 +28,7 @@
 			    		  $location.path('/seguretat/controlar-seguretat');
 			    		  return $q.reject(response);
 			    	  } else if (response.data[0].resultat=="KO") {
-			    		  alert(response.data[0].resultat);
+			    		  alert(response.data[0].missatge);
 			    	  }
 			    	} 
 			    	return response;			     

@@ -17,6 +17,7 @@ use LlistaCompra\Model\Configuracio\UsuariConnectat;
 use Zend\Json\Decoder;
 use LlistaCompra\Model\CatalegProductes\Producte;
 use Tipus\Boolean;
+use LlistaCompra\TO\RespostaTO;
 
 
 
@@ -37,26 +38,28 @@ class CatalegProductesController extends AbstractRestfulController
            
     public function consultarProducteAction(){
     	$res=[];
+    	$res[0]=new RespostaTO();
     	try{
 	    	$request=$this->getRequest();
 	    	$id=$request->getQuery("id");    	
 	    	if ($id!=null){
 	    		$this->producte=$this->cataleg->consultarProducte(new Integer($id),UsuariConnectat::getUsuari()->getDepenDe());
 	    		$pto=new ProducteTO();
-	    		$pto->convertir($this->producte);	    		
+	    		$pto->convertir($this->producte);		    		    		
 	    		$res[0]->resultat="OK";
 	    		$res[0]->producte=$pto;
 	    	}    		
 	    } catch (\Exception $e){
     		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
     	} finally{
 	    	return new JsonModel($res);
 	    }	
     }
        
     public function editarProducteAction(){
-    	$res=[];   	    	   	    	 
+    	$res=[];
+    	$res[0]=new RespostaTO();
 		try{
 	    	$request=$this->getRequest();	
 	    	$content=$request->getContent();	
@@ -75,7 +78,7 @@ class CatalegProductesController extends AbstractRestfulController
 			$res[0]->id=$id;   		
 	   	} catch (\Exception $e){
 	   		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
 	   	} finally{
 	    	return new JsonModel($res);
 	    }
@@ -83,6 +86,7 @@ class CatalegProductesController extends AbstractRestfulController
     
     public function esborrarProducteAction(){
     	$res=[];
+    	$res[0]=new RespostaTO();
 		try{
     		$request=$this->getRequest();
     		$id=$request->getQuery("id");    					
@@ -98,6 +102,8 @@ class CatalegProductesController extends AbstractRestfulController
     }
     
     public function afegirCistellaAction(){    	
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 
     	try{
     		$request=$this->getRequest();
     		$content=$request->getContent();
@@ -107,13 +113,15 @@ class CatalegProductesController extends AbstractRestfulController
     		$res[0]->resultat="OK";    		
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
     	} finally{
 	    	return new JsonModel($res);
 	    }
     }
     
     public function traureCistellaAction(){
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 
     	try{
     		$request=$this->getRequest();
     		$content=$request->getContent();
@@ -123,7 +131,7 @@ class CatalegProductesController extends AbstractRestfulController
     		$res[0]->resultat="OK";
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
     	} finally{
 	    	return new JsonModel($res);
 	    }
@@ -138,6 +146,7 @@ class CatalegProductesController extends AbstractRestfulController
     
     private function consultarProductes($supermercat){
     	$res=[];
+    	$res[0]=new RespostaTO();    	
     	try{
     		$prod=array();
     		if ($supermercat==null){
@@ -155,7 +164,7 @@ class CatalegProductesController extends AbstractRestfulController
     		$res[0]->productes=$prod;
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-    		$res[0]=$e->getMessage();
+    		$res[0]->missatge=$e->getMessage();
     	} finally{
     		return new JsonModel($res);
     	}

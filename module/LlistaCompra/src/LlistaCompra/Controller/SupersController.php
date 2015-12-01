@@ -13,6 +13,7 @@ use LlistaCompra\TO\CatalegProductes\ProducteTO;
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Json\Decoder;
+use LlistaCompra\TO\RespostaTO;
 
 
 class SupersController extends AbstractRestfulController
@@ -27,6 +28,7 @@ class SupersController extends AbstractRestfulController
         
     public function consultarLlistaSupermercatsAction(){   
     	$res=[];
+    	$res[0]=new RespostaTO();   	     	
     	try{
 	    	$ssto=array(); 	    	    	
 	    	$supers=$this->supers->consultarLlistaSupermercats(UsuariConnectat::getUsuari()->getDepenDe());	
@@ -39,7 +41,7 @@ class SupersController extends AbstractRestfulController
 			$res[0]->supermercats=$ssto;	    	
 	    } catch (\Exception $e){
 	    	$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();	    	
+	    	$res[0]->missatge=$e->getMessage();	    	
 	    } finally{
 	    	return new JsonModel($res);
 	    }	    
@@ -47,6 +49,7 @@ class SupersController extends AbstractRestfulController
     
     public function consultarSupermercatAction(){
     	$res=[];
+    	$res[0]=new RespostaTO();    	     	
     	try{
 	    	$request=$this->getRequest();
 	    	$id=$request->getQuery("id");    	
@@ -66,7 +69,7 @@ class SupersController extends AbstractRestfulController
 	    	}	    	
 	    } catch (\Exception $e){
 	    	$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();	    	
+	    	$res[0]->missatge=$e->getMessage();
 	    } finally{
 	    	return new JsonModel($res);
 	    };
@@ -74,6 +77,7 @@ class SupersController extends AbstractRestfulController
         
     public function editarSupermercatAction(){    	   	    	 
     	$res=[];
+    	$res[0]=new RespostaTO();    	     	
     	try{
     		$request=$this->getRequest();
     		$content=$request->getContent();    		
@@ -84,7 +88,7 @@ class SupersController extends AbstractRestfulController
     		$res[0]->id=$id;
     		} catch (\Exception $e){
     			$res[0]->resultat="KO";
-    			$res[0]=$e->getMessage();
+    			$res[0]->missatge=$e->getMessage();
     		} finally{
     			return new JsonModel($res);
     		}
@@ -92,6 +96,7 @@ class SupersController extends AbstractRestfulController
     
     public function esborrarSupermercatAction(){
     	$res=[];
+    	$res[0]=new RespostaTO();    	     	
     	try{
     		$request=$this->getRequest();
     		$id=$request->getQuery("id");

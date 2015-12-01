@@ -8,11 +8,13 @@ use LlistaCompra\Model\Configuracio\UsuariConnectat;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\MvcEvent;
+use LlistaCompra\TO\RespostaTO;
 
 class SeguretatController extends AbstractRestfulController
 {			
 	public function validarUsuariAction(){
-		$res=[];		
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 			
 		try{
 			$request=$this->getRequest();			
 			$content=$request->getContent();			
@@ -34,20 +36,21 @@ class SeguretatController extends AbstractRestfulController
 			}
 		} catch (\Exception $e){
     		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
     	} finally{
 	    	return new JsonModel($res);
 	    }				
 	} 	
 		
 	public function sortirAction(){
-		$res=[];	
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 		
 		try{		
 			UsuariConnectat::desconnectar();
 			$res[0]=true;
 		} catch (\Exception $e){
     		$res[0]->resultat="KO";
-	    	$res[0]=$e->getMessage();
+	    	$res[0]->missatge=$e->getMessage();
     	} finally{
 	    	return new JsonModel($res);
 	    }				

@@ -18,8 +18,8 @@ class CatalegDAO{
 		$this->tablegateway=new TableGateway("PRODUCTE", \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::getStaticAdapter());		
 	}
 	
-	public function consultarLlistaProductes($depenDe){
-		$productes=array();
+	public function consultarLlistaProductes(Integer $depenDe){
+		$productes=array();		
 		$result=$this->tablegateway->select("DEPEN_DE=".$depenDe->getInteger());
 		foreach ($result as $row){
 			$p=$this->omplirProducte($row);

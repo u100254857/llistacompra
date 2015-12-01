@@ -13,6 +13,7 @@ use LlistaCompra\Model\Configuracio\UsuariConnectat;
 use Zend\Json\Decoder;
 use DateTime;
 use LlistaCompra\Model\CatalegProductes\Producte;
+use LlistaCompra\TO\RespostaTO;
 
 
 class CistellaController extends AbstractRestfulController
@@ -27,6 +28,7 @@ class CistellaController extends AbstractRestfulController
         
     public function consultarLlistaProductesAction(){
     	$res=[];
+    	$res[0]=new RespostaTO();     	
     	try{
     		$productes=$this->cataleg->consultarProductesCistella(UsuariConnectat::getUsuari()->getDepenDe());
     		foreach ($productes as $p){
@@ -38,13 +40,15 @@ class CistellaController extends AbstractRestfulController
     		$res[0]->productes=$prod;
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-    		$res[0]=$e->getMessage();
+    		$res[0]->missatge=$e->getMessage();
     	} finally{
     		return new JsonModel($res);
     	}
     }
             
     public function comprarProducteAction(){
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 
     	try{
     		$request=$this->getRequest();
     		$content=$request->getContent();
@@ -54,13 +58,15 @@ class CistellaController extends AbstractRestfulController
     		$res[0]->resultat="OK";
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-    		$res[0]=$e->getMessage();
+    		$res[0]->missatge=$e->getMessage();
     	} finally{
     		return new JsonModel($res);
     	}
     }
     
     public function retornarProducteAction(){
+    	$res=[];
+    	$res[0]=new RespostaTO();    	 
         try{
     		$request=$this->getRequest();
     		$content=$request->getContent();
@@ -70,7 +76,7 @@ class CistellaController extends AbstractRestfulController
     		$res[0]->resultat="OK";
     	} catch (\Exception $e){
     		$res[0]->resultat="KO";
-    		$res[0]=$e->getMessage();
+    		$res[0]->missatge=$e->getMessage();
     	} finally{
     		return new JsonModel($res);
     	}    }          
