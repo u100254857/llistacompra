@@ -9,15 +9,17 @@
 		this.productes=productes;
 		this.translate=$translate;
 		this.supermercats=[];
-		recuperarSupermercats(this.supermercats,this.productes);
+		this.supermercatsID=[];
+		recuperarSupermercats(this.supermercats,this.supermercatsID,this.productes);
 	};
 	
-	function recuperarSupermercats(supermercats,productes){
+	function recuperarSupermercats(supermercats,supermercatsID,productes){
 		if (productes!=null){
 			for (var i=0;i<productes.length;i++){
 				var superactual=productes[i].supermercat;
-				if (supermercats.indexOf(superactual)==-1 && superactual.id!=null){
+				if (supermercatsID.indexOf(superactual.id)==-1 && superactual.id!=null){
 					supermercats[supermercats.length]=superactual;
+					supermercatsID[supermercatsID.length]=superactual.id;
 				}
 			}			
 		}
