@@ -1,2 +1,6 @@
-RewriteEngine On
-RewriteRule ^(.*)$ %{ENV:BASE}/public/$1 [NC,L]
+RewriteEngine On 
+DirectoryIndex main.html
+RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
+RewriteRule ^(.*) - [E=BASE:%1]
+RewriteRule ^(.*)$ %{ENV:BASE}public/$1 [L]
+ 
