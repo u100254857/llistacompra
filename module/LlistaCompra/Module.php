@@ -12,6 +12,7 @@ use Zend\Json\Json;
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Json\Server\Response;
+use LlistaCompra\TO\RespostaTO;
 
 class Module
 {
@@ -56,6 +57,7 @@ class Module
     	if (get_class($e->getTarget())!='LlistaCompra\\Controller\\SeguretatController'){
 			if (!UsuariConnectat::estaConnectat()){
 				$res=[];
+				$res[0]=new RespostaTO();
 				$res[0]->resultat="NC";
 				$model = new JsonModel($res);
 				$e->setViewModel($model);
