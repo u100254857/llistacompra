@@ -146,6 +146,9 @@
 	                        when('/main.html',{
 	                        	redirectTo:'/seguretat/controlar-seguretat'
 	                        }).
+	                        when('/',{
+	                        	redirectTo:'/seguretat/controlar-seguretat'
+	                        }).	                        
 	                        otherwise({
 	                          redirectTo: '/main'
 	                        });
