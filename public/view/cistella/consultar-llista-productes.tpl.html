@@ -1,13 +1,13 @@
 <div class="table-responsive">		
-	<table class="table table-hover sortable-theme-bootstrap" data-sortable>
+	<table class="table table-hover sortable-theme-min" data-sortable>
 		<thead>
 			<tr>
 				<th id="cataleg_columna_supermercat" ordre="supermercat.nom" translate data-sorted="true" data-sorted-direction="ascending" ng-click="Cistella.ordenar('cataleg_columna_supermercat')">cataleg.columna.supermercat</th>			
 				<th id="cataleg_columna_nom" ordre="nom" translate ng-click="Cistella.ordenar('cataleg_columna_nom')">cataleg.columna.nom</th>
 				<th id="cataleg_columna_darreracompra" ordre="darreraCompra" translate class="vertical" ng-click="Cistella.ordenar('cataleg_columna_darreracompra')">cataleg.columna.darreracompra</th>
 				<th id="cataleg_columna_seguentcompra" ordre="seguentCompra" translate class="vertical" ng-click="Cistella.ordenar('cataleg_columna_seguentcompra')">cataleg.columna.seguentcompra</th>				
-				<th	ng-if="Cistella.filtre" id="cataleg_columna_encistella" translate class="vertical boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.pendent</th>
-				<th	ng-if="!Cistella.filtre" id="cataleg_columna_encistella" translate class="vertical boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.comprat</th>
+				<th	ng-if="Cistella.filtre" id="cataleg_columna_encistella" translate class="boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.pendent</th>
+				<th	ng-if="!Cistella.filtre" id="cataleg_columna_encistella" translate class="boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.comprat</th>
 			</tr>
 		</thead>
 		<tbody>
