@@ -20,26 +20,32 @@
 	}]);
 		
 	app.factory("ControlUsuariService",["$q","$location", function($q,$location){
-		return {
-			    response: function(response) {			  			    	
-			    	$("#carregant").hide();
+		var cus= { 
+			contador: 0,
+			response: function(response) {
+					cus.contador--;
+			    	if (cus.contador==0) $("#carregant").hide();
 			    	if(response.data[0].resultat){
-			    	  if (response.data[0].resultat=="NC"){			    	  
-			    		  $location.path('/seguretat/controlar-seguretat');
-			    		  return $q.reject(response);
-			    	  } else if (response.data[0].resultat=="KO") {
-			    		  alert(response.data[0].missatge);
-			    	  }
+			    		$("#carregant").hide();
+			    		if(response.data[0].resultat=="NC"){			    	  
+			    			$location.path('/seguretat/controlar-seguretat');
+			    			return $q.reject(response);
+			    		} else if (response.data[0].resultat=="KO") {
+			    			alert(response.data[0].missatge);
+			    		}
 			    	} 
 			    	return response;			     
 			    },
 		
 			    request: function(config){
+			    	cus.contador++;
 			    	$("#carregant").show();
+			    	$("#carregant").css("z-index",1);
 			    	return config;
 			    }
 
-			  };			  
+			  };
+		return cus;
 	}])
 				
 })();

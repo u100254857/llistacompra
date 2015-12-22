@@ -18,7 +18,18 @@ class Cataleg{
 	}
 	
 	public function consultarProducte(Integer $id,Usuari $depenDe){
-		return $this->catalegDAO->consultarProducte($id,$depenDe->getId());
+		$query=new String("ID=".$id->getInteger());
+		return $this->catalegDAO->consultarProducte($query,$depenDe->getId());
+	}
+	
+	public function consultarProducteNom(String $nom, Usuari $depenDe){
+		$query=new String("LOWER(NOM)=LOWER('".$nom->getString()."')");
+		return $this->catalegDAO->consultarProducte($query, $depenDe->getId());
+	}
+	
+	public function consultarProducteNombre(String $nombre, Usuari $depenDe){
+		$query=new String("LOWER(NOMBRE)=LOWER('".$nombre->getString()."')");
+		return $this->catalegDAO->consultarProducte($query, $depenDe->getId());
 	}
 	
 	public function esborrarProductesSupermercat(Integer $s,Usuari $depenDe){
@@ -36,5 +47,5 @@ class Cataleg{
 	public function consultarProductesCistella(Usuari $depenDe){
 		return $this->catalegDAO->consultarProductesCistella($depenDe->getId());
 	}
-		
+			
 }

@@ -83,9 +83,16 @@ class SupersController extends AbstractRestfulController
     		$content=$request->getContent();    		
     		$post=Decoder::decode($content);
     		$dd=UsuariConnectat::getUsuari()->getDepenDe();
-    		$id=$this->supermercat->guardar(new Integer($post->id),new String($post->nom),$dd);
-    		$res[0]->resultat="OK";
-    		$res[0]->id=$id;
+    		$this->supermercat=$this->supers->consultarSupermercatNom(new String($post->nom), $dd);
+    		if ($this->supermercat->getNom()!=null && $this->supermercat->getNom()->getString()!=null && 
+    				$this->supermercat->getId()!=null && $this->supermercat->getId()->getInteger()!=null && 
+    				$this->supermercat->getId()->getInteger()!=$post->id){
+    			$res[0]->resultat="ES";
+    		} else {
+    			$id=$this->supermercat->guardar(new Integer($post->id),new String($post->nom),$dd);
+    			$res[0]->resultat="OK";
+    			$res[0]->id=$id;    			 
+    		}
     		} catch (\Exception $e){
     			$res[0]->resultat="KO";
     			$res[0]->missatge=$e->getMessage();
@@ -109,5 +116,24 @@ class SupersController extends AbstractRestfulController
     	} finally{
     		return new JsonModel($res);
     	}
-    }    
+    }
+        
+    private function validarSupermercat($post,$dd){
+    	$res=new RespostaTO();
+    	$res->resultat="OK";
+    	$missatges=array();
+    	$prodaux=new Producte();
+    	$prodaux=$this->cataleg->consultarProducteNom(new String($post->nom),$dd);
+    	if ($prodaux->getNom()!=null && $prodaux->getNom()->getString()!=null && $prodaux->getId()!=null && $prodaux->getId()->getInteger()!=null && $prodaux->getId()->getInteger()!=$post->id){
+    		$res->resultat="EP";
+    		$missatges[]="MXN";
+    	}
+    	$prodaux=$this->cataleg->consultarProducteNombre(new String($post->nombre),$dd);
+    	if ($prodaux->getNombre()!=null && $prodaux->getNombre()->getString()!=null && $prodaux->getId()!=null && $prodaux->getId()->getInteger()!=null && $prodaux->getId()->getInteger()!=$post->id){
+    		$res->resultat="EP";
+    		$missatges[]="MSN";
+    	}
+    	$res->missatge=$missatges;
+    	return $res;
+    }
 }

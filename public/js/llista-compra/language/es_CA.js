@@ -33,6 +33,7 @@ var translationsCA= {
 			  "cistella.estat": "Estat",
 			  "cistella.estat.pendent": "Pendent comprar",
 			  "cistella.estat.comprat": "Comprat",
+			  "cistella.afegir.producte": "Afegir/Treure producte",
 			  "general.gravar": "Gravar",
 			  "general.gravar.continuar": "Gravar i Continuar",
 			  "general.tornar": "Tornar",
@@ -41,5 +42,9 @@ var translationsCA= {
 			  "seguretat.telefon": "Telèfon",
 			  "seguretat.defecte.telefon": "Introdueixi el telèfon",
 			  "seguretat.iniciar.sessio":"Iniciar sessió",
-			  "seguretat.usuari.novalid":"L'usuari introduït no és vàlid"
-}
+			  //Validacions
+			  "seguretat.usuari.novalid":"L'usuari introduït no és vàlid",
+			  "cataleg.producte.mateixnom":"Ja existeix un altre producte amb el mateix \"nom\" ",
+			  "cataleg.producte.mateixnombre":"Ja existeix un altre producte amb el mateix \"nombre\"",
+			  "supermercats.supermercat.mateixnom":"Ja existeix un altre supermercat amb el mateix nom" 
+};

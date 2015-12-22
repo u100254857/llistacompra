@@ -28,8 +28,8 @@ class CatalegDAO{
 		return $productes;
 	}
 	
-	public function consultarProducte(Integer $id, Integer $depenDe){
-		$result=$this->tablegateway->select("ID=".$id->getInteger()." AND DEPEN_DE=".$depenDe->getInteger());
+	public function consultarProducte(String $query, Integer $depenDe){
+		$result=$this->tablegateway->select($query->getString()." AND DEPEN_DE=".$depenDe->getInteger());
 		$p=$this->omplirProducte($result->current());
 		return $p;
 	}
@@ -57,7 +57,7 @@ class CatalegDAO{
 		}
 		return $productes;
 	}
-	
+
 	private function omplirProducte($row){
 		$p=new Producte();		
 		$p->setId(new Integer($row["ID"]));
@@ -74,7 +74,7 @@ class CatalegDAO{
 		$p->setEnCistella(new Boolean($row["EN_CISTELLA"]==1));
 		$ss=new SupersDAO();
 		if ($row["SUPERMERCAT"]!=null){
-			$s=$ss->consultarSupermercat(new Integer($row["SUPERMERCAT"]), new Integer($row["DEPEN_DE"]));
+			$s=$ss->consultarSupermercat(new String("ID=".$row["SUPERMERCAT"]), new Integer($row["DEPEN_DE"]));
 			$p->setSupermercat($s);				
 		}
 		$p->setCopsComprat(new Integer($row["COPS_COMPRAT"]));

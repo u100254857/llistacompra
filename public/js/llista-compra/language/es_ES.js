@@ -33,6 +33,7 @@ var translationsES= {
 			  "cistella.estat": "Estado",
 			  "cistella.estat.pendent": "Pendiente comprar",
 			  "cistella.estat.comprat": "Comprado",
+			  "cistella.afegir.producte": "Añadir/Quitar producto",
 			  "general.gravar": "Grabar",
 			  "general.gravar.continuar": "Grabar y Continuar",
 			  "general.tornar": "Volver",
@@ -41,5 +42,9 @@ var translationsES= {
 			  "seguretat.telefon": "Teléfono",
 			  "seguretat.defecte.telefon": "Introduzca el teléfono",
 			  "seguretat.iniciar.sessio":"Iniciar sesión",
-			  "seguretat.usuari.novalid":"El usuario introducido no es válido"
+			  // Validaciones
+			  "seguretat.usuari.novalid":"El usuario introducido no es válido",
+			  "cataleg.producte.mateixnom":"Ya existe otro producto con el mismo \"nom\"",
+			  "cataleg.producte.mateixnombre":"Ya existe otro producto con el mismo \"nombre\"",
+			  "supermercats.supermercat.mateixnom":"Ya existe otro supermercado con el mismo nombre"
 		};

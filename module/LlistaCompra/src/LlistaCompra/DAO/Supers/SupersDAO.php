@@ -25,8 +25,8 @@ class SupersDAO{
 		return $supermercats;
 	}
 	
-	public function consultarSupermercat(Integer $id, Integer $depenDe){
-		$result=$this->tablegateway->select("ID=".$id->getInteger()." AND DEPEN_DE=".$depenDe->getInteger());
+	public function consultarSupermercat(String $query, Integer $depenDe){
+		$result=$this->tablegateway->select($query->getString()." AND DEPEN_DE=".$depenDe->getInteger());
 		$s=$this->omplirSupermercat($result->current());
 		return $s;
 	}

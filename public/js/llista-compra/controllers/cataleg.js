@@ -7,7 +7,12 @@
 	var CatalegProducteController=function($location,$translate,CatalegProductesService,productes){
 		this.cps=CatalegProductesService;
 		this.seleccionat=null;
-		this.ordre="supermercat.nom";				
+		this.ordre={
+				"camp":"nom",
+				"columna":"cataleg_columna_nom",
+				"sentit":"ascending"
+		};
+		this.filtre=null;		
 		this.productes=productes;
 		this.location=$location;
 		this.translate=$translate;
@@ -22,6 +27,40 @@
 		
 	CatalegProducteController.prototype.seleccionar=function(producte){		
 		this.seleccionat=producte;
+	}
+	
+	CatalegProducteController.prototype.ordenar=function(columna){		
+		var id="#"+columna;
+		if (columna==this.ordre.columna){
+			if (this.ordre.sentit=="ascending"){
+				$(id).attr("data-sorted-direction","descending");
+				this.ordre.camp="-"+$(id).attr("ordre");
+				this.ordre.sentit="descending";
+			} else {
+				$(id).attr("data-sorted-direction","ascending");
+				this.ordre.camp=$(id).attr("ordre");
+				this.ordre.sentit="ascending";
+			}
+		} else {
+			var idant="#"+this.ordre.columna;
+			$(idant).removeAttr("data-sorted");
+			$(idant).removeAttr("data-sorted_direction");
+			$(id).attr("data-sorted","true");
+			$(id).attr("data-sorted-direction","ascending");
+			this.ordre.camp=$(id).attr("ordre");
+			this.ordre.columna=columna;
+			this.ordre.sentit="ascending";
+		}
+	}
+	
+	CatalegProducteController.prototype.filtrar=function(){
+		if (this.filtre==null){
+			this.filtre=true;
+		} else if (this.filtre){
+			this.filtre=false
+		} else {
+			this.filtre=null;
+		}
 	}
 
 	CatalegProducteController.prototype.editarProducte=function(crear){					
@@ -99,35 +138,59 @@
 	var ProducteController=function(CatalegProductesService,producte,supermercats){
 		this.cps=CatalegProductesService;
 		this.producte=producte;
-		this.supermercats=supermercats;		
+		this.supermercats=supermercats;	
+		this.errors={"nom":false,"nombre":false};
 	};
 	
+	function validarGuardar(response,me){
+		if (response.data[0].resultat=="KO"){
+			alert(response.data[0].missatge);
+			return false;
+		} else if (response.data[0].resultat=="EP"){
+			var i;
+			for(i=0;i<response.data[0].missatge.length;i++){
+				if (response.data[0].missatge[i]=="MXN"){
+						me.errors.nom=true
+				}
+				if (response.data[0].missatge[i]=="MSN"){
+						me.errors.nombre=true
+				}
+
+			}	
+			return false;
+		} 
+		return true;
+	}
+	
 	ProducteController.prototype.guardarProducte=function(){
+		var me=this;
+		this.errors.nom=false;
+		this.errors.nombre=false;
 		this.cps.guardarProducte(this.producte).
 		then(function(response){
-			if (response.data[0].resultat=="KO"){
-				alert(response.data[0].missatge);
-			}
-			history.go(-1);
+			if (validarGuardar(response,me)){
+				history.go(-1);
+			}			
 		});
 	}
 		
 	ProducteController.prototype.guardarProducteYContinuar=function(editarProducte){
 		var me=this;
+		this.errors.nom=false;
+		this.errors.nombre=false;
 		var form=editarProducte;		
 		var supermercat=this.producte.supermercat;		
 		this.cps.guardarProducte(this.producte).
 		then(function(response){
-			if (response.data[0]=="KO"){
-				alert(response.data[0].missatge);
+			if (validarGuardar(response,me)){
+				me.producte.id=null
+				me.producte.nom="";
+				me.producte.nombre="";
+				me.producte.darreraCompra=null;
+				me.producte.enCistella=false;
+				me.producte.frequencia=null;
+				form.$setPristine();
 			}
-			me.producte.id=null
-			me.producte.nom="";
-			me.producte.nombre="";
-			me.producte.darreraCompra=null;
-			me.producte.enCistella=false;
-			me.producte.frequencia=null;
-			form.$setPristine();
 		});
 	}
 

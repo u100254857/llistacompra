@@ -6,15 +6,16 @@
         	<option value="">{{'cataleg.producte.defecte.super' | translate}}</option>
     	</select>
 	</div>	
-	<div class="form-group" ng-class="{'has-error':editarProducte.nom.$error.required && editarProducte.nom.$dirty}">
+	<div class="form-group" ng-class="{'has-error':(editarProducte.nom.$error.required && editarProducte.nom.$dirty) || Producte.errors.nom}">
 		<label class="control-label" for="nom">{{'cataleg.producte.nom' | translate}}</label>
 		<input type="text" class="form-control" id="nom" name="nom" ng-model="Producte.producte.nom" placeholder="{{'cataleg.producte.defecte.nom' | translate}}" required autofocus>	    
 	</div>
-	<div class="form-group" ng-class="{'has-error':editarProducte.nombre.$error.required && editarProducte.nombre.$dirty}">  
+	<div class="alert alert-danger" role="alert" ng-show="Producte.errors.nom" translate>cataleg.producte.mateixnom</div>
+	<div class="form-group" ng-class="{'has-error':(editarProducte.nombre.$error.required && editarProducte.nombre.$dirty) || Producte.errors.nombre }">  
 		<label class="control-label" for="nombre">{{'cataleg.producte.nombre' | translate}}</label>
 		<input type="text" class="form-control" id="nombre" name="nombre" ng-model="Producte.producte.nombre" placeholder="{{'cataleg.producte.defecte.nombre' | translate}}" required>    
 	</div>
-	
+	<div class="alert alert-danger" role="alert" ng-show="Producte.errors.nombre" translate>cataleg.producte.mateixnombre</div>
 	<div>
 		<div ng-include="'view/cancelar.tlp.html'" class="botons-form"></div>
 		<div class="botons-form">

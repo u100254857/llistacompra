@@ -1,41 +1,25 @@
-<form class="form-inline cataleg-form">
-	<div class="form-group">			    
-    	<label class="control-label" for="nom" translate>cataleg.producte.supermercat</label>					
-		<select class="form-control" name="super" ng-model="supermercat"
-        	ng-options="super as super.nom for super in Cistella.supermercats track by super.id">
-        	<option value="" translate>cataleg.producte.defecte.super</option>
-    	</select>    	
-    </div>
-	<div class="form-group cataleg-grup-form">			    
-    	<label class="control-label" for="nom" translate>cistella.estat</label>					
-		<select class="form-control" name="enCistella" ng-model="enCistella" ng-init="enCistella='true'">
- 		  	<option value=true selected translate>cistella.estat.pendent</option>
-		  	<option value=false translate>cistella.estat.comprat</option>
-    	</select>    	
-    </div>
-</form>	
-
 <div class="table-responsive">		
-	<table class="table table-hover">
+	<table class="table table-hover sortable-theme-bootstrap" data-sortable>
 		<thead>
 			<tr>
-				<th translate>cataleg.columna.supermercat</th>			
-				<th translate>cataleg.columna.nom</th>
-				<th translate class="vertical">cataleg.columna.darreracompra</th>
-				<th translate class="vertical">cataleg.columna.seguentcompra</th>				
-				<th/>
+				<th id="cataleg_columna_supermercat" ordre="supermercat.nom" translate data-sorted="true" data-sorted-direction="ascending" ng-click="Cistella.ordenar('cataleg_columna_supermercat')">cataleg.columna.supermercat</th>			
+				<th id="cataleg_columna_nom" ordre="nom" translate ng-click="Cistella.ordenar('cataleg_columna_nom')">cataleg.columna.nom</th>
+				<th id="cataleg_columna_darreracompra" ordre="darreraCompra" translate class="vertical" ng-click="Cistella.ordenar('cataleg_columna_darreracompra')">cataleg.columna.darreracompra</th>
+				<th id="cataleg_columna_seguentcompra" ordre="seguentCompra" translate class="vertical" ng-click="Cistella.ordenar('cataleg_columna_seguentcompra')">cataleg.columna.seguentcompra</th>				
+				<th	ng-if="Cistella.filtre" id="cataleg_columna_encistella" translate class="vertical boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.pendent</th>
+				<th	ng-if="!Cistella.filtre" id="cataleg_columna_encistella" translate class="vertical boto_cistella" ng-click="Cistella.filtrar()">cistella.estat.comprat</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="producte in Cistella.productes | filter: enCistella | filter: supermercat.nom">
+			<tr ng-repeat="producte in Cistella.productes | orderBy: Cistella.ordre.camp | filter: Cistella.filtre">
 				<td>{{producte.supermercat.nom}}</td>
 				<td ng-if="Cistella.translate.use() === 'ca'">{{producte.nom}}</td>
 				<td ng-if="Cistella.translate.use() === 'es'">{{producte.nombre}}</td>
 				<td class="vertical">{{producte.darreraCompra}}</td>
 				<td  class="vertical">{{producte.seguentCompra}}</td>				
 				<td>
-				  <div class="pull-right"><button class="btn btn-primary btn-xs" ng-click="Cistella.comprarProducte(producte)" ng-hide="!producte.enCistella">{{'cistella.comprar' | translate}}<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button></div>
-				  <div class="pull-right"><button class="btn btn-warning btn-xs" ng-click="Cistella.retornarProducte(producte)" ng-hide="producte.enCistella"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>{{'cistella.retornar' | translate}}</button></div>					
+				  <div class="boto_cistella"><button class="btn btn-primary btn-xs" ng-click="Cistella.comprarProducte(producte)" ng-hide="!producte.enCistella">{{'cistella.comprar' | translate}}<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button></div>
+				  <div class="boto_cistella"><button class="btn btn-warning btn-xs" ng-click="Cistella.retornarProducte(producte)" ng-hide="producte.enCistella"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>{{'cistella.retornar' | translate}}</button></div>					
 				</td>
 			</tr>
 		</tbody>

@@ -17,9 +17,15 @@ class Supers{
 	}
 	
 	public function consultarSupermercat(Integer $id,Usuari $depenDe){
-		return $this->supersDAO->consultarSupermercat($id,$depenDe->getId());
+		$query=new String("ID=".$id->getInteger());
+		return $this->supersDAO->consultarSupermercat($query,$depenDe->getId());
 	}
 		
+	public function consultarSupermercatNom(String $nom,Usuari $depenDe){
+		$query=new String("LOWER(NOM)=LOWER('".$nom->getString()."')");
+		return $this->supersDAO->consultarSupermercat($query,$depenDe->getId());
+	}
+	
 	public function consultarLlistaSupermercats(Usuari $depenDe){
 		return $this->supersDAO->consultarLlistaSupermercats($depenDe->getId());
 	}

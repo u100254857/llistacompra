@@ -32,7 +32,7 @@ class CatalegProductesController extends AbstractRestfulController
     	$this->producte=new Producte();    	
     }
         
-    public function consultarLlistaProductesAction(){
+    public function consultarLlistaProductesAction(){    	
 		return $this->consultarProductes(null);
     }
            
@@ -70,12 +70,10 @@ class CatalegProductesController extends AbstractRestfulController
 	   		if ($post->supermercat!=null && $post->supermercat->id!=null){
 	   			$super=$supermercats->consultarSupermercat(new Integer($post->supermercat->id), $dd);
 	   		}	   		   			   		
-			if ($post->id!=null){
-				$this->producte=$this->cataleg->consultarProducte(new Integer($post->id), UsuariConnectat::getUsuari()->getDepenDe());
-			}
-	   		$id=$this->producte->guardar(new Integer($post->id),$super,new String($post->nom),new String($post->nombre),$dd);
-			$res[0]->resultat="OK";
-			$res[0]->id=$id;   		
+			$res[0]=$this->validarProducte($post,$dd);
+			if ($res[0]->resultat=="OK"){				
+				$res[0]=$this->gravarProducte($post,$super,$dd);
+			}		
 	   	} catch (\Exception $e){
 	   		$res[0]->resultat="KO";
 	    	$res[0]->missatge=$e->getMessage();
@@ -168,6 +166,32 @@ class CatalegProductesController extends AbstractRestfulController
     	} finally{
     		return new JsonModel($res);
     	}
+    }
+    
+   private function gravarProducte($post,$super,$dd){
+    	$id=$this->producte->guardar(new Integer($post->id),$super,new String($post->nom),new String($post->nombre),$dd);
+    	$res[0]->resultat="OK";
+    	$res[0]->id=$id;
+    	return $res; 
+    }
+    
+    private function validarProducte($post,$dd){
+    	$res=new RespostaTO();
+    	$res->resultat="OK";
+    	$missatges=array();
+    	$prodaux=new Producte();
+    	$prodaux=$this->cataleg->consultarProducteNom(new String($post->nom),$dd);
+		if ($prodaux->getNom()!=null && $prodaux->getNom()->getString()!=null && $prodaux->getId()!=null && $prodaux->getId()->getInteger()!=null && $prodaux->getId()->getInteger()!=$post->id){
+			$res->resultat="EP";
+			$missatges[]="MXN";
+		}
+		$prodaux=$this->cataleg->consultarProducteNombre(new String($post->nombre),$dd);
+		if ($prodaux->getNombre()!=null && $prodaux->getNombre()->getString()!=null && $prodaux->getId()!=null && $prodaux->getId()->getInteger()!=null && $prodaux->getId()->getInteger()!=$post->id){
+			$res->resultat="EP";
+			$missatges[]="MSN";
+		}				
+		$res->missatge=$missatges;
+		return $res;
     }
     
 }

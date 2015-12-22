@@ -64,15 +64,28 @@
 		this.ss=SupermercatsService;
 		this.supermercat=supermercat;
 		this.translate=$translate;
+		this.errors={"nom":false};
 	};
 	
+	function validarGuardar(response,me){
+		if (response.data[0].resultat=="KO"){
+			alert(response.data[0].missatge);
+			return false;
+		} else if (response.data[0].resultat=="ES"){
+					me.errors.nom=true;
+					return false;
+		} 
+		return true;
+	}
+
+	
 	SupermercatController.prototype.guardarSupermercat=function(){
+		var me=this;
 		this.ss.guardarSupermercat(this.supermercat).
 		then(function(response){
-			if (response.data[0].resultat=="KO"){
-				alert(response.data[0].missatge);
-			}
-			history.go(-1);
+			if (validarGuardar(response,me)){
+				history.go(-1);	
+			}			
 		});		
 	}
 		

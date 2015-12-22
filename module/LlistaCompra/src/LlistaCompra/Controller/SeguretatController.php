@@ -33,7 +33,7 @@ class SeguretatController extends AbstractRestfulController
 			} else {
 				$res[0]->resultat="NV";
 				$res[0]->missatge="NO VALID";				
-			}
+			}			
 		} catch (\Exception $e){
     		$res[0]->resultat="KO";
 	    	$res[0]->missatge=$e->getMessage();
