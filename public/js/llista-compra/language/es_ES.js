@@ -31,7 +31,7 @@ var translationsES= {
 			  "cistella.comprar": "Comprar",
 			  "cistella.retornar": "Retornar",
 			  "cistella.estat": "Estado",
-			  "cistella.estat.pendent": "Pendiente comprar",
+			  "cistella.estat.pendent": "P. comprar",
 			  "cistella.estat.comprat": "Comprado",
 			  "cistella.afegir.producte": "Añadir/Quitar producto",
 			  "general.gravar": "Grabar",

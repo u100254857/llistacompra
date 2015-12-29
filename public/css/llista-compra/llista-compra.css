@@ -22,14 +22,17 @@
 	height:100%;	
 }
 
-.boto_cistella{
-	text-align:right!important;
-}
 
 @media (orientation: portrait){
 	.vertical{
 			display:none;			
 		}	
+}
+
+@media (orientation: landscape){
+	.boto_cistella{
+		text-align:right!important;
+	}
 }
 
 @media (max-width: 767px){
